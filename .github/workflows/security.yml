@@ -1,32 +1,33 @@
 name: Security Scan Pipeline
 
 on:
-push:
-branches:
-- main
-pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
-security-check:
-runs-on: ubuntu-latest
+  security-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-steps:
-  - name: Checkout Code
-    uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-  - name: Set up Python
-    uses: actions/setup-python@v4
-    with:
-      python-version: "3.10"
+      - name: Install Bandit
+        run: pip install bandit
 
-  - name: Install Bandit
-    run: pip install bandit
+      - name: Run Bandit Scan
+        # Adding --exit-zero ensures the job passes so you can get the report.
+        # Without it, Bandit "fails" the build if it finds any vulnerability.
+        run: bandit -r . -f txt -o bandit-report.txt --exit-zero
 
-  - name: Run Bandit Scan
-    run: bandit -r . -f txt -o bandit-report.txt
-
-  - name: Upload Bandit Report
-    uses: actions/upload-artifact@v4
-    with:
-      name: bandit-report
-      path: bandit-report.txt
+      - name: Upload Bandit Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.txt

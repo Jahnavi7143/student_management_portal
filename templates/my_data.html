@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}My Data — SecureLearn{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">My Data</h1>
+        <p class="page-sub">Your personal academic record</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">📄 Student Record</span>
+    </div>
+
+    {% if student %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="td-num">{{ student['id'] }}</td>
+                    <td><strong>{{ student['name'] }}</strong></td>
+                    <td>
+                        {% set m = student['marks'] %}
+                        <span
+                            class="marks {% if m>=80 %}marks-a{% elif m>=70 %}marks-b{% elif m>=60 %}marks-c{% else %}marks-f{% endif %}">
+                            {{ m }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if m >= 90 %}A+
+                        {% elif m >= 80 %}A
+                        {% elif m >= 70 %}B
+                        {% elif m >= 60 %}C
+                        {% else %}F{% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <p>No record found.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

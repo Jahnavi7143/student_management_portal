@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}All Students — SecureLearn{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">All Students</h1>
+        <p class="page-sub">Complete student records — {{ students|length }} entries</p>
+    </div>
+    <div class="page-actions">
+        <a href="/download_students" class="btn btn-success">
+            ⬇ Download CSV
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td class="td-num">{{ loop.index }}</td>
+                    <td class="td-mono">{{ s.id }}</td>
+                    <td><strong>{{ s.name }}</strong></td>
+                    <td>
+                        <span
+                            class="marks {% if s.marks>=80 %}marks-a{% elif s.marks>=70 %}marks-b{% elif s.marks>=60 %}marks-c{% else %}marks-f{% endif %}">
+                            {{ s.marks }}
+                        </span>
+                    </td>
+                    <td>{{ s.grade }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <p>No student records found.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

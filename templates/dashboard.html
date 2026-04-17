@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — SecureLearn{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-sub">Welcome back, <strong>{{ username }}</strong></p>
+    </div>
+    <span class="badge {% if role=='admin' %}badge-admin{% else %}badge-user{% endif %}">{{ role|upper }}</span>
+</div>
+
+<div class="cards-grid two-col" style="margin-bottom:1.2rem">
+    <!-- Profile Summary -->
+    <div class="card" style="margin-bottom:0">
+        <div class="card-header">
+            <span class="card-title">👤 Profile Summary</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-key">Username</span>
+            <span class="profile-val">{{ username }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-key">Password</span>
+            <span class="profile-val-mono">{{ password }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-key">Role</span>
+            <span class="profile-val">
+                <span class="badge {% if role=='admin' %}badge-admin{% else %}badge-user{% endif %}">{{ role|upper
+                    }}</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card" style="margin-bottom:0">
+        <div class="card-header">
+            <span class="card-title">⚡ Quick Actions</span>
+        </div>
+        <div class="action-list">
+            {% if role == 'admin' %}
+            <a href="/students" class="action-item blue">📋 View All Students</a>
+            <a href="/add_user" class="action-item green">➕ Add New User</a>
+            <a href="/delete" class="action-item red">🗑 Manage & Delete Students</a>
+            <a href="/update_profile" class="action-item yellow">✏️ Update Profile</a>
+            {% else %}
+            <a href="/my_data" class="action-item blue">📄 View My Data</a>
+            <a href="/update_profile" class="action-item yellow">✏️ Update Profile</a>
+            {% endif %}
+            <a href="/logout" class="action-item">🚪 Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

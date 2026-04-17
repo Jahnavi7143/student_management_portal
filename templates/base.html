@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}SecureLearn{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="nav-brand-icon">🎓</div>
+            <span class="nav-brand-text">SecureLearn</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-link {% if request.path=='/dashboard' %}active{% endif %}">Dashboard</a>
+
+            {% if session.role == 'admin' %}
+            <a href="/students" class="nav-link {% if request.path=='/students'    %}active{% endif %}">All Students</a>
+            <a href="/add_user" class="nav-link {% if request.path=='/add_user'    %}active{% endif %}">Add User</a>
+            <a href="/delete" class="nav-link {% if request.path=='/delete'      %}active{% endif %}">Delete</a>
+            {% else %}
+            <a href="/my_data" class="nav-link {% if request.path=='/my_data'     %}active{% endif %}">My Data</a>
+            {% endif %}
+
+            <a href="/update_profile"
+                class="nav-link {% if request.path=='/update_profile' %}active{% endif %}">Profile</a>
+        </div>
+
+        <div class="nav-right">
+            <div class="nav-user-info">
+                <span class="badge {% if session.role=='admin' %}badge-admin{% else %}badge-user{% endif %}">
+                    {{ session.role|upper }}
+                </span>
+                <span class="nav-username">{{ session.username }}</span>
+            </div>
+            <a href="/logout" class="nav-logout">Logout</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>

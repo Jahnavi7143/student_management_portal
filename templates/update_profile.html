@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Update Profile — SecureLearn{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Update Profile</h1>
+        <p class="page-sub">Change your account details below</p>
+    </div>
+</div>
+
+<div class="card" style="max-width:520px">
+    <div class="card-header">
+        <span class="card-title">✏️ Edit Account</span>
+    </div>
+
+    {% if success %}
+    <div class="alert alert-success">✓ {{ success }}</div>
+    {% endif %}
+
+    <form method="POST" action="/update_profile">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="{{ username }}" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password" value="{{ password }}" required />
+        </div>
+
+        <!-- Hidden role field intentionally manipulable via DevTools -->
+        <input type="hidden" name="role" value="{{ role }}" id="role-field" />
+
+        <div style="display:flex;gap:.6rem;margin-top:.4rem">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="/dashboard" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

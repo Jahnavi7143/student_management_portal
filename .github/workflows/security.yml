@@ -30,10 +30,4 @@ steps:
     with:
       name: bandit-report
       path: bandit-report.txt
-
-  # OPTIONAL: OWASP ZAP Scan
-  - name: Run OWASP ZAP Scan
-    uses: zaproxy/action-baseline@v0.10.0
-    with:
-      target: 'http://example.com'
 ```

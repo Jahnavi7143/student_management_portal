@@ -1,0 +1,39 @@
+name: Security Scan Pipeline
+
+on:
+push:
+branches: [ main ]
+pull_request:
+
+jobs:
+security-check:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout Code
+    uses: actions/checkout@v3
+
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.10'
+
+  - name: Install Bandit
+    run: pip install bandit
+
+  - name: Run Bandit Scan
+    run: bandit -r . -f txt -o bandit-report.txt
+
+  - name: Upload Bandit Report
+    uses: actions/upload-artifact@v4
+    with:
+      name: bandit-report
+      path: bandit-report.txt
+
+  # OPTIONAL: OWASP ZAP Scan
+  - name: Run OWASP ZAP Scan
+    uses: zaproxy/action-baseline@v0.10.0
+    with:
+      target: 'http://example.com'
+```

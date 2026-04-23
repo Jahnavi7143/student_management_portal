@@ -24,21 +24,23 @@
         {% endif %}
 
         <form method="POST" action="/add_user">
+
+            <!-- 🔐 CSRF FIX -->
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Enter username" required autocomplete="off" />
             </div>
+
             <div class="form-group">
                 <label>Password</label>
-                <input type="text" name="password" placeholder="Enter password" required />
+                <!-- 🔐 FIXED input type -->
+                <input type="password" name="password" placeholder="Enter password" required />
             </div>
-            <div class="form-group">
-                <label>Role</label>
-                <select name="role">
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
+
+            <!-- ❌ REMOVED ROLE SELECTION (security fix) -->
+
             <button type="submit" class="btn btn-primary btn-full">Create User</button>
         </form>
     </div>

@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}SecureLearn{% endblock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ✅ REMOVED Google Fonts (fixes ZAP issues) -->
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body>
+<body style="font-family: Arial, sans-serif;">
 
     <nav class="navbar">
         <div class="nav-brand">
@@ -22,15 +23,17 @@
             <a href="/dashboard" class="nav-link {% if request.path=='/dashboard' %}active{% endif %}">Dashboard</a>
 
             {% if session.role == 'admin' %}
-            <a href="/students" class="nav-link {% if request.path=='/students'    %}active{% endif %}">All Students</a>
-            <a href="/add_user" class="nav-link {% if request.path=='/add_user'    %}active{% endif %}">Add User</a>
-            <a href="/delete" class="nav-link {% if request.path=='/delete'      %}active{% endif %}">Delete</a>
+            <a href="/students" class="nav-link {% if request.path=='/students' %}active{% endif %}">All Students</a>
+            <a href="/add_user" class="nav-link {% if request.path=='/add_user' %}active{% endif %}">Add User</a>
+            <a href="/delete" class="nav-link {% if request.path=='/delete' %}active{% endif %}">Delete</a>
             {% else %}
-            <a href="/my_data" class="nav-link {% if request.path=='/my_data'     %}active{% endif %}">My Data</a>
+            <a href="/my_data" class="nav-link {% if request.path=='/my_data' %}active{% endif %}">My Data</a>
             {% endif %}
 
             <a href="/update_profile"
-                class="nav-link {% if request.path=='/update_profile' %}active{% endif %}">Profile</a>
+               class="nav-link {% if request.path=='/update_profile' %}active{% endif %}">
+               Profile
+            </a>
         </div>
 
         <div class="nav-right">

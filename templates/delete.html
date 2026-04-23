@@ -7,9 +7,14 @@
         <h1 class="page-title">Manage Students</h1>
         <p class="page-sub">Remove student records from the system</p>
     </div>
+
     {% if students %}
     <form method="POST" action="/delete"
         onsubmit="return confirm('Are you sure you want to delete ALL student records? This cannot be undone.')">
+
+        <!-- 🔐 CSRF FIX -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
         <input type="hidden" name="action" value="delete_all" />
         <button type="submit" class="btn btn-danger">🗑 Delete All Students</button>
     </form>
@@ -47,18 +52,21 @@
                     <td><strong>{{ s['name'] }}</strong></td>
                     <td>
                         {% set m = s['marks'] %}
-                        <span
-                            class="marks {% if m>=80 %}marks-a{% elif m>=70 %}marks-b{% elif m>=60 %}marks-c{% else %}marks-f{% endif %}">
+                        <span class="marks {% if m>=80 %}marks-a{% elif m>=70 %}marks-b{% elif m>=60 %}marks-c{% else %}marks-f{% endif %}">
                             {{ m }}
                         </span>
                     </td>
                     <td>
-                        {% if m >= 90 %}A+{% elif m >= 80 %}A{% elif m >= 70 %}B{% elif m >= 60 %}C{% else %}F{% endif
-                        %}
+                        {% if m >= 90 %}A+{% elif m >= 80 %}A{% elif m >= 70 %}B{% elif m >= 60 %}C{% else %}F{% endif %}
                     </td>
                     <td>
-                        <form method="POST" action="/delete" onsubmit="return confirm('Delete {{ s['name'] }}?')"
-                            style="display:inline">
+                        <form method="POST" action="/delete"
+                              onsubmit="return confirm('Delete {{ s['name'] }}?')"
+                              style="display:inline">
+
+                            <!-- 🔐 CSRF FIX -->
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
                             <input type="hidden" name="action" value="delete_one" />
                             <input type="hidden" name="student_id" value="{{ s['id'] }}" />
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>

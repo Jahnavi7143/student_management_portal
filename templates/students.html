@@ -30,15 +30,20 @@
                 {% for s in students %}
                 <tr>
                     <td class="td-num">{{ loop.index }}</td>
-                    <td class="td-mono">{{ s.id }}</td>
-                    <td><strong>{{ s.name }}</strong></td>
+                    <td class="td-mono">{{ s['id'] }}</td>
+                    <td><strong>{{ s['name'] }}</strong></td>
                     <td>
-                        <span
-                            class="marks {% if s.marks>=80 %}marks-a{% elif s.marks>=70 %}marks-b{% elif s.marks>=60 %}marks-c{% else %}marks-f{% endif %}">
-                            {{ s.marks }}
+                        <span class="marks {% if s['marks']>=80 %}marks-a{% elif s['marks']>=70 %}marks-b{% elif s['marks']>=60 %}marks-c{% else %}marks-f{% endif %}">
+                            {{ s['marks'] }}
                         </span>
                     </td>
-                    <td>{{ s.grade }}</td>
+                    <td>
+                        {% if s['marks'] >= 90 %}A+
+                        {% elif s['marks'] >= 80 %}A
+                        {% elif s['marks'] >= 70 %}B
+                        {% elif s['marks'] >= 60 %}C
+                        {% else %}F{% endif %}
+                    </td>
                 </tr>
                 {% else %}
                 <tr>

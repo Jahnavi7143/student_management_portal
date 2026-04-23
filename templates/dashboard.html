@@ -16,19 +16,20 @@
         <div class="card-header">
             <span class="card-title">👤 Profile Summary</span>
         </div>
+
         <div class="profile-row">
             <span class="profile-key">Username</span>
             <span class="profile-val">{{ username }}</span>
         </div>
-        <div class="profile-row">
-            <span class="profile-key">Password</span>
-            <span class="profile-val-mono">{{ password }}</span>
-        </div>
+
+        <!-- 🔒 PASSWORD REMOVED (SECURITY FIX) -->
+
         <div class="profile-row">
             <span class="profile-key">Role</span>
             <span class="profile-val">
-                <span class="badge {% if role=='admin' %}badge-admin{% else %}badge-user{% endif %}">{{ role|upper
-                    }}</span>
+                <span class="badge {% if role=='admin' %}badge-admin{% else %}badge-user{% endif %}">
+                    {{ role|upper }}
+                </span>
             </span>
         </div>
     </div>

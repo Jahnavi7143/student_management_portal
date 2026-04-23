@@ -1,0 +1,70 @@
+Run started:2026-04-20 08:26:13.842903+00:00
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'supersecretkey123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: .\app.py:286:17
+285	app = Flask(__name__)
+286	app.secret_key = "supersecretkey123"
+287	
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: .\app.py:361:18
+360	        conn = get_db()
+361	        query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+362	        try:
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: .\app.py:412:29
+411	    student_id = request.args.get("id", session.get("user_id", 1))
+412	    student = conn.execute(f"SELECT * FROM students WHERE id={student_id}").fetchone()
+413	    conn.close()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: .\app.py:484:27
+483	        elif action == "delete_one" and student_id:
+484	            conn.execute(f"DELETE FROM students WHERE id={student_id}")
+485	            conn.commit()
+
+--------------------------------------------------
+>> Issue: [B201:flask_debug_true] A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.
+   Severity: High   Confidence: Medium
+   CWE: CWE-94 (https://cwe.mitre.org/data/definitions/94.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b201_flask_debug_true.html
+   Location: .\app.py:525:4
+524	    init_db()
+525	    app.run(debug=True)
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 218
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 1
+		Medium: 3
+		High: 1
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 1
+		Medium: 4
+		High: 0
+Files skipped (0):
